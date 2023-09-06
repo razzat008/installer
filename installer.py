@@ -1,0 +1,25 @@
+#!/bin/env python
+
+packages = [
+        "keepassxc",        
+        "telegram-desktop",
+         "librewolf",
+            "firefox",
+            "signal-desktop",
+            "qbittorrent",
+            "zathura",
+            "mpv",
+            "mpc",
+             "monero-wallet",
+             "git",
+             "timeshift",
+             "brillo",
+             "flameshot",
+             "tor-browser",
+             "python3",
+             "rust",
+             "make",
+             "ranger",
+             "lazygit",
+             "gscreenshot",
+            ]
