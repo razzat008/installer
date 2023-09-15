@@ -17,7 +17,7 @@ What you'll need:
 - make the installer executable
 - run the script with root acess
 
-```c
+```bash
 chmod +x installer
 sudo bash ./installer
 ```
