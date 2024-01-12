@@ -1,3 +1,46 @@
-#!/bin/sh env
+#!/bin/bash 
+
+
+#Packages that need to be installed
+packages=( telegram-desktop bitwarden librewolf firefox\
+signal-desktop qbittorrent zathura\
+mpv neovim mpc monero-wallet\
+git ncmpcpp xorg-init xorg-server timeshift\
+brillo flameshot tor-browser python3 rust make\
+lua ranger lazygit gscreenshot)
+
+isInstalled(){
+  pacman -Qi "$1" &> /dev/null
+  return $?
+}
+
+for packs in "{packages[@]}"
+do
+  if ! isInstalled("$packs"); then
+    sudo pacman -S --noconfirm "$packs" 
+    printf("\n")
+  else
+    printf("%s is already installed" "$packs")
+    sleep 1
+  fi
+  
+
+# creating necessary directories
+echo "================creating necessary directories================" 
+sleep 5
+
+[ ! -d ~/.config ] && mkdir -p ~/.config
+[ ! -d ~/.gitbuilds/ ] && mkdir -p ~/.gitbuilds
+[ ! -d ~/.config/suckless/ ] && mkdir -p ~/.config/suckless
+[ ! -d ~/.local/bin ] && mkdir -p ~/.local/bin
+[ ! -d ~/.local/share/fonts ] && mkdir -p ~/.local/share/fonts
+
+# cloning repos into their respective directories
+git clone --depth=1 https://gitlab.com/razzat008/dwm  $HOME/.config/suckless/dwm
+git clone --depth=1 https://github.com/razzat008/slstatus  $HOME/.config/suckless/slstatus
+git clone --depth=1 https://github.com/razzat008/st  $HOME/.config/suckless/st
+git clone --depth=1 https://github.com/razzat008/dotfiles  $HOME/.gitbuilds/dotfiles
+
+[-d ~/.gitbuilds/dotfiles/] && cp -r ~/.gitbuilds/dotfiles/.xinitrc ~/
 
 
