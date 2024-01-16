@@ -3,7 +3,7 @@
 A typical installer made to easily configure a new system by installer things like
 dwm, slstatus, neovim etc
 
-This installer will installer various packages along with above mentioned packages and use my premade configs.
+This installer will install various packages along with above mentioned packages and use my premade configs.
 
 ## Prerequisites 
 
@@ -13,7 +13,8 @@ What you'll need:
 
 ## How to use?
 
-- clone this repo
+- clone/fork this repo
+- make changes to it as you like
 - make the installer executable
 - run the script with root privileges
 
