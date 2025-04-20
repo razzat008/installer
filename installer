@@ -1,26 +1,109 @@
 #!/bin/bash 
-
-
 #Packages that need to be installed
-packages=( telegram-desktop bitwarden librewolf firefox\
-signal-desktop qbittorrent zathura\
-mpv neovim mpc monero-wallet pulseaudio\
-git ncmpcpp xorg-init xorg-server timeshift\
-brillo flameshot python3 rust make\
-lua ranger lazygit gscreenshot)
+PKGS=(
+
+    # --- XORG Display Rendering
+    'xorg'                  # Base Package
+    'xorg-drivers'          # Display Drivers 
+    'xterm'                 # Terminal for TTY
+    'xorg-server'           # XOrg server
+    'xorg-apps'             # XOrg apps group
+    'xorg-xinit'            # XOrg init
+    'xorg-xinput'           # XOrg xinput
+    'mesa'                  # Open source version of OpenGL
+
+    # --- Setup Desktop
+    'xfce4-power-manager'   # Power Manager 
+    'rofi'                  # Menu System
+    'picom'                 # Translucent Windows
+    'xclip'                 # System Clipboard
+    'lxappearance'          # Set System Themes
+
+    # --- Login Display Manager
+    # 'lightdm'                   # Base Login Manager
+    # 'lightdm-webkit2-greeter'   # Framework for Awesome Login Themes
+
+    # --- Networking Setup
+    'dialog'                    # Enables shell scripts to trigger dialog boxex
+    'networkmanager'            # Network connection manager
+    # 'openvpn'                   # Open VPN support
+    # 'networkmanager-openvpn'    # Open VPN plugin for NM
+    'network-manager-applet'    # System tray icon/utility for network connectivity
+    'dhclient'                  # DHCP client
+    'libsecret'                 # Library for storing passwords
+    'fail2ban'                  # Ban IP's after man failed login attempts
+    'ufw'                       # Uncomplicated firewall
+
+    # --- Audio
+    'alsa-utils'        # Advanced Linux Sound Architecture (ALSA) Components https://alsa.opensrc.org/
+    'alsa-plugins'      # ALSA plugins
+    'pulseaudio'        # Pulse Audio sound components
+    'pulseaudio-alsa'   # ALSA configuration for pulse audio
+    'pavucontrol'       # Pulse Audio volume control
+    'pnmixer'           # System tray volume control
+
+    # --- Bluetooth
+    'bluez'                 # Daemons for the bluetooth protocol stack
+    'bluez-utils'           # Bluetooth development and debugging utilities
+    'bluez-libs'            # Bluetooth libraries
+    'bluez-firmware'        # Firmware for Broadcom BCM203x and STLC2300 Bluetooth chips
+    'blueberry'             # Bluetooth configuration tool
+    # 'pulseaudio-bluetooth'  # Bluetooth support for PulseAudio
+
+    # --- Applications
+    'telegram-desktop'
+    'bitwarden'
+    'firefox'
+    'signal-desktop'
+    'qbittorrent'
+    'zathura'
+    'sxiv'
+    'neovim'
+    'vim'
+    'pulseaudio'
+    'git'
+    'flameshot'
+    'python3'
+    'rust'
+    'make'
+    'lua'
+    'ranger'
+    'lazygit'
+    'discord'
+    'zsh'
+    'python'
+    'wget'
+    'unzip'
+    'nodejs'
+    'npm'
+)
+
+new_user=ceaser
+home=/home/ceaser
+
+if [ "$(id -u)" != "0" ]; then
+    echo "Run with root."
+    exit 1
+fi
 
 isInstalled(){
   pacman -Qi "$1" &> /dev/null
   return $?
 }
 
-for packs in "{packages[@]}"
+userRelated(){
+  useradd -m -G wheel light video storage audio -s zsh $new_user
+  printf "\nEnter password for %s.\n" "$new_user"
+  passwd ceaser
+}
+
+for PKG in "${PKGS[@]}"; do
 do
-  if ! isInstalled "$packs" ; then
-    sudo pacman -S --noconfirm "$packs" 
+  if ! isInstalled "$PKG" ; then
+    sudo pacman -S "$PKG" --noconfirm --needed
     printf "\n" 
   else
-    printf "%s is already installed" "$packs" 
+    printf "%s is already installed.\n" "$PKG" 
     sleep 1
   fi
 done
@@ -29,14 +112,21 @@ done
 # creating necessary directories
 echo "================creating necessary directories================" 
 
-[ ! -d ~/.config ] && mkdir -p ~/.config
-[ ! -d ~/.gitbuilds/ ] && mkdir -p ~/.gitbuilds
+xdg-user-dirs-update
+# [ ! -d ~/.config ] && mkdir -p $home/.config
 [ ! -d ~/.config/suckless/ ] && mkdir -p ~/.config/suckless
-[ ! -d ~/.local/bin ] && mkdir -p ~/.local/bin
-[ ! -d ~/.local/share/fonts ] && mkdir -p ~/.local/share/fonts
+# [ ! -d ~/.local/bin ] && mkdir -p $home/.local/bin
+# [ ! -d ~/.local/share/fonts ] && mkdir -p $home/.local/share/fonts
 
 # cloning repos into their respective directories
-git clone --depth=1 https://gitlab.com/razzat008/dwm  $HOME/.config/suckless/dwm
-git clone --depth=1 https://github.com/razzat008/slstatus  $HOME/.config/suckless/slstatus
-git clone --depth=1 https://github.com/razzat008/st  $HOME/.config/suckless/st
-git clone --depth=1 https://github.com/razzat008/dotfiles  $HOME/.gitbuilds/dotfiles
+#
+[ ! -d ~/.config/nvchad/lua/custom/ ] && mkdir -p ~/.config/nvchad/lua/custom/
+git clone --depth=1 https://gitlab.com/razzat008/nvchad  $home/.config/nvchad/dwm
+# git clone --depth=1 https://gitlab.com/razzat008/dwm  $HOME/.config/suckless/dwm
+# git clone --depth=1 https://github.com/razzat008/slstatus  $HOME/.config/suckless/slstatus
+# git clone --depth=1 https://github.com/razzat008/st  $HOME/.config/suckless/st
+git clone --depth=1 https://github.com/razzat008/dotfiles  $home/.gitbuilds/dotfiles
+
+
+[ ! -d ~/.config/rofi/ ] && mkdir -p ~/.config/rofi | cd ~/.config/rofit && cp -r ~/.gitbuilds/dotfiles/rofi . # config file for rofi
+[ ! -d ~/.config/alacritty/ ] && mkdir -p ~/.config/alacritty | cd ~/.config/alacritty/ && cp -r ~/.gitbuilds/dotfiles/rofi . # config file for alacritty
