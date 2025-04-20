@@ -10,6 +10,7 @@ This installer will install various packages along with above mentioned packages
 What you'll need:
 - an internet connection
 - git 
+- basic bash knowledge 
 
 ## How to use?
 
@@ -23,4 +24,5 @@ chmod +x installer
 sudo bash ./installer
 ```
 
-  
+## References
+https://github.com/johnynfulleffect/ArchMatic
