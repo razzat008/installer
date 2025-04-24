@@ -15,7 +15,7 @@ PKGS=(
     # --- Setup Desktop
     'xfce4-power-manager'   # Power Manager 
     'rofi'                  # Menu System
-    'picom'                 # Translucent Windows
+    # 'picom'                 # Translucent Windows
     'xclip'                 # System Clipboard
     'lxappearance'          # Set System Themes
 
@@ -31,16 +31,17 @@ PKGS=(
     'network-manager-applet'    # System tray icon/utility for network connectivity
     'dhclient'                  # DHCP client
     'libsecret'                 # Library for storing passwords
-    'fail2ban'                  # Ban IP's after man failed login attempts
-    'ufw'                       # Uncomplicated firewall
+    # 'fail2ban'                  # Ban IP's after man failed login attempts
+    # 'ufw'                       # Uncomplicated firewall
 
     # --- Audio
     'alsa-utils'        # Advanced Linux Sound Architecture (ALSA) Components https://alsa.opensrc.org/
     'alsa-plugins'      # ALSA plugins
-    'pulseaudio'        # Pulse Audio sound components
-    'pulseaudio-alsa'   # ALSA configuration for pulse audio
+    # 'pulseaudio'        # Pulse Audio sound components
+    # 'pulseaudio-alsa'   # ALSA configuration for pulse audio
     'pavucontrol'       # Pulse Audio volume control
-    'pnmixer'           # System tray volume control
+    'pipewire'
+    # 'pnmixer'           # System tray volume control
 
     # --- Bluetooth
     'bluez'                 # Daemons for the bluetooth protocol stack
@@ -49,18 +50,18 @@ PKGS=(
     'bluez-firmware'        # Firmware for Broadcom BCM203x and STLC2300 Bluetooth chips
     'blueberry'             # Bluetooth configuration tool
     # 'pulseaudio-bluetooth'  # Bluetooth support for PulseAudio
+    'ttf-nerd-fonts-symbols'
 
     # --- Applications
     'telegram-desktop'
     'bitwarden'
     'firefox'
     'signal-desktop'
-    'qbittorrent'
+    # 'qbittorrent'
     'zathura'
     'sxiv'
     'neovim'
     'vim'
-    'pulseaudio'
     'git'
     'flameshot'
     'python3'
@@ -91,11 +92,11 @@ isInstalled(){
   return $?
 }
 
-userRelated(){
-  useradd -m -G wheel light video storage audio -s zsh $new_user
-  printf "\nEnter password for %s.\n" "$new_user"
-  passwd ceaser
-}
+# userRelated(){
+#   useradd -m -G wheel light video storage audio -s zsh $new_user
+#   printf "\nEnter password for %s.\n" "$new_user"
+#   passwd ceaser
+# }
 
 for PKG in "${PKGS[@]}"; do
 do
@@ -112,7 +113,7 @@ done
 # creating necessary directories
 echo "================creating necessary directories================" 
 
-xdg-user-dirs-update
+# xdg-user-dirs-update
 # [ ! -d ~/.config ] && mkdir -p $home/.config
 [ ! -d ~/.config/suckless/ ] && mkdir -p ~/.config/suckless
 # [ ! -d ~/.local/bin ] && mkdir -p $home/.local/bin
