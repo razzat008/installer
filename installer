@@ -1,5 +1,5 @@
 #!/bin/bash 
-#Packages that need to be installed
+Packages that need to be installed
 PKGS=(
 
     # --- XORG Display Rendering
@@ -99,7 +99,6 @@ isInstalled(){
 # }
 
 for PKG in "${PKGS[@]}"; do
-do
   if ! isInstalled "$PKG" ; then
     sudo pacman -S "$PKG" --noconfirm --needed
     printf "\n" 
@@ -118,15 +117,15 @@ echo "================creating necessary directories================"
 [ ! -d ~/.config/suckless/ ] && mkdir -p ~/.config/suckless
 # [ ! -d ~/.local/bin ] && mkdir -p $home/.local/bin
 # [ ! -d ~/.local/share/fonts ] && mkdir -p $home/.local/share/fonts
-
+#
 # cloning repos into their respective directories
 #
 [ ! -d ~/.config/nvchad/lua/custom/ ] && mkdir -p ~/.config/nvchad/lua/custom/
-git clone --depth=1 https://gitlab.com/razzat008/nvchad  $home/.config/nvchad/dwm
-# git clone --depth=1 https://gitlab.com/razzat008/dwm  $HOME/.config/suckless/dwm
-# git clone --depth=1 https://github.com/razzat008/slstatus  $HOME/.config/suckless/slstatus
-# git clone --depth=1 https://github.com/razzat008/st  $HOME/.config/suckless/st
-git clone --depth=1 https://github.com/razzat008/dotfiles  $home/.gitbuilds/dotfiles
+git clone --depth=1 https://github.com/razzat008/nvchad  $home/.config/nvchad
+git clone --depth=1 https://gitlab.com/razzat008/dwm  $HOME/.config/suckless/dwm
+git clone --depth=1 https://github.com/razzat008/slstatus  $HOME/.config/suckless/slstatus
+git clone --depth=1 https://github.com/razzat008/st  $HOME/.config/suckless/st
+#git clone --depth=1 https://github.com/razzat008/dotfiles  $home/.gitbuilds/dotfiles
 
 
 [ ! -d ~/.config/rofi/ ] && mkdir -p ~/.config/rofi | cd ~/.config/rofit && cp -r ~/.gitbuilds/dotfiles/rofi . # config file for rofi
